@@ -1,0 +1,33 @@
+{
+    "name": "ayesh/wp-error-log",
+    "description": "Track and monitor WordPress errors and exceptions easily right from your WordPress site",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": "^7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.1"
+    },
+    "support": {
+        "issues": "https://github.com/Ayesh/WP-Error-Log/issues",
+        "source": "https://github.com/Ayesh/WP-Error-Log",
+        "docs": "https://github.com/Ayesh/WP-Error-Log"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ayesh Karunaratne",
+            "email": "ayesh@ayesh.me"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ayesh\\WP_ErrorLog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ayesh\\WP_ErrorLog\\Tests\\": "tests/"
+        }
+    }
+}
