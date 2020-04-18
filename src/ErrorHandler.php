@@ -4,7 +4,7 @@ namespace Ayesh\WP_ErrorLog;
 
 use Ayesh\WP_ErrorLog\Logger\LoggerInterface;
 
-class ErrorHandler {
+final class ErrorHandler {
     private $prevErroHandler;
     private $prevExceptionHandler;
 
