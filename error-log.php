@@ -12,6 +12,17 @@
 use Ayesh\WP_ErrorLog\ErrorHandler;
 use Ayesh\WP_ErrorLog\Logger\WPDBLogger;
 
+error_log_register_handlers();
+
+register_activation_hook( __FILE__, static function () {
+    include_once __DIR__ . '/src/Install/Install.php';
+    global $wpdb;
+
+    $installer = new Ayesh\WP_ErrorLog\Install\Install($wpdb);
+    $installer->setupTable();
+});
+
+
 function error_log_register_handlers(): void {
     global $wpdb;
 
@@ -26,6 +37,4 @@ function error_log_register_handlers(): void {
     $error_handler->setPreviousExceptionHandler($curr_exception_handler);
 }
 
-error_log_register_handlers();
 
-trigger_error('dsadsa');
