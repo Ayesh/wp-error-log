@@ -13,23 +13,21 @@ final class ErrorHandler {
      */
     private $logger;
 
-    private const ERROR_TYPES = [
-        \E_ERROR => 'Error',
-        \E_WARNING => 'Warning',
-        \E_PARSE => 'Parse error',
-        \E_NOTICE => 'Notice',
-        \E_CORE_ERROR => 'Core error',
-        \E_CORE_WARNING => 'Core warning',
-        \E_COMPILE_ERROR => 'Compile error',
-        \E_COMPILE_WARNING => 'Compile warning',
-        \E_USER_ERROR => 'User error',
-        \E_USER_WARNING => 'User warning',
-        \E_USER_NOTICE => 'User notice',
-        \E_STRICT => 'Strict warning',
-        \E_RECOVERABLE_ERROR => 'Recoverable fatal error',
-        \E_DEPRECATED => 'Deprecated function',
-        \E_USER_DEPRECATED => 'User deprecated function'
-    ];
+    /**
+     * @var LogEntry
+     */
+    private $logEntry;
+
+
+    /**
+     * @var array
+     */
+    private $context;
+
+    /**
+     * @var int
+     */
+    private $userId;
 
     public function __construct(LoggerInterface $logger) {
         $this->logger = $logger;

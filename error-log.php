@@ -32,6 +32,7 @@ function error_log_register_handlers(): void {
     include_once __DIR__ . '/src/LogEntry.php';
 
     $error_handler = new ErrorHandler(new WPDBLogger($wpdb));
+    $error_handler->setContext($_SERVER);
     $curr_error_handler = set_error_handler([$error_handler, 'handleError']);
     $curr_exception_handler = set_exception_handler([$error_handler, 'handleException']);
     $error_handler->setPreviousErrorHandler($curr_error_handler);
