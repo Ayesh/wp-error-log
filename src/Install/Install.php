@@ -9,8 +9,8 @@ CREATE TABLE
 %tablename
 	(
 		`eid` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Entry ID, an auto-incrementing ID assigned to the entry',
-		`timestamp` INT UNSIGNED NOT NULL COMMENT 'UNIX timestamp when the event was recorded.' ,
-		`severity` TINYINT(3) UNSIGNED NOT NULL COMMENT 'Severity level of the event; lower the value, the more severe it is',
+		`timestamp` INT UNSIGNED NOT NULL COMMENT 'UNIX timestamp when the event was recorded.',
+		`severity` SMALLINT(5) UNSIGNED NOT NULL COMMENT 'Severity level of the event; lower the value, the more severe it is',
 		`url` TEXT NULL DEFAULT NULL COMMENT 'URL on which the event occurred.',
 		`referrer` TEXT NULL DEFAULT NULL COMMENT 'Referrer URL of the event.',
 		`hostname` VARCHAR(128) NULL DEFAULT NULL COMMENT 'IPv4/IPv6 address of the client',
