@@ -18,6 +18,6 @@ class WPDBLogger implements LoggerInterface {
     }
 
     public function log(LogEntry $entry): void {
-        // TODO: Implement log() method.
+        var_dump($entry);
     }
 }
