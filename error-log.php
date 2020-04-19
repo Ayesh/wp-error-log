@@ -14,6 +14,24 @@ use Ayesh\WP_ErrorLog\Logger\WPDBLogger;
 
 error_log_register_handlers();
 
+function error_log_get_handler(): ErrorHandler {
+    static $handler;
+    if ($handler) {
+        return $handler;
+    }
+
+    include_once __DIR__ . '/src/ErrorHandler.php';
+    include_once __DIR__ . '/src/Logger/LoggerInterface.php';
+    include_once __DIR__ . '/src/Logger/WPDBLogger.php';
+    include_once __DIR__ . '/src/LogEntry.php';
+
+    global $wpdb;
+    $handler = new ErrorHandler(new WPDBLogger($wpdb));
+    $handler->setContext($_SERVER);
+
+    return $handler;
+}
+
 register_activation_hook( __FILE__, static function () {
     include_once __DIR__ . '/src/Install/Install.php';
     global $wpdb;
@@ -24,19 +42,19 @@ register_activation_hook( __FILE__, static function () {
 
 
 function error_log_register_handlers(): void {
-    global $wpdb;
+    set_error_handler(
+        static function (int $type, string $errstr, ?string $errfile, ?int $errline) {
+            $handler = error_log_get_handler();
+            $handler->handleError($type, $errstr, $errfile, $errline);
+        }
+    );
 
-    include_once __DIR__ . '/src/ErrorHandler.php';
-    include_once __DIR__ . '/src/Logger/LoggerInterface.php';
-    include_once __DIR__ . '/src/Logger/WPDBLogger.php';
-    include_once __DIR__ . '/src/LogEntry.php';
+    set_exception_handler(static function(\Throwable $exception) {
+        $handler = error_log_get_handler();
+        $handler->handleException($exception);
+        throw $exception;
+    });
 
-    $error_handler = new ErrorHandler(new WPDBLogger($wpdb));
-    $error_handler->setContext($_SERVER);
-    $curr_error_handler = set_error_handler([$error_handler, 'handleError']);
-    $curr_exception_handler = set_exception_handler([$error_handler, 'handleException']);
-    $error_handler->setPreviousErrorHandler($curr_error_handler);
-    $error_handler->setPreviousExceptionHandler($curr_exception_handler);
 }
 
-
+trigger_error('dadsa');
