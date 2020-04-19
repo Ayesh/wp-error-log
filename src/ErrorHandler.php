@@ -36,7 +36,8 @@ final class ErrorHandler {
     }
 
     public function handleError(int $severity, string $errstr, ?string $errfile, ?int $errline): bool {
-        $this->logger->logError($severity, $errstr, $errfile, $errline);
+        $entry = $this->getLogEntry();
+        $this->logger->log($entry);
         if (is_callable($this->prevErroHandler)) {
             return (bool) ($this->prevExceptionHandler)($severity, $errstr, $errfile, $errline);
         }
@@ -45,7 +46,8 @@ final class ErrorHandler {
     }
 
     public function handleException(\Throwable $ex): void {
-        $this->logger->logException($ex);
+        $entry = $this->getLogEntry();
+        $this->logger->log($entry);
         if (is_callable($this->prevExceptionHandler)) {
             ($this->prevExceptionHandler)($ex);
         }
@@ -61,5 +63,23 @@ final class ErrorHandler {
 
     public function setPreviousExceptionHandler(?callable $curr_error_handler): void {
         $this->prevExceptionHandler = $curr_error_handler;
+    }
+
+    public function setContext(array &$server_vars): void {
+        $this->context = &$server_vars;
+    }
+
+    public function setUid(int $uid = 0): void {
+        $this->userId = $uid;
+    }
+
+    private function getLogEntry(): LogEntry {
+        if ($this->logEntry) {
+            return clone $this->logEntry;
+        }
+
+        $this->logEntry = $entry = new LogEntry();
+        $this->logEntry->uid = $this->userId;
+        return $entry;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Ayesh\WP_ErrorLog\Logger;
 
+use Ayesh\WP_ErrorLog\LogEntry;
 use wpdb;
 
 class WPDBLogger implements LoggerInterface {
@@ -26,5 +27,9 @@ class WPDBLogger implements LoggerInterface {
 
     public function commit(): void {
         // TODO: Implement commit() method.
+    }
+
+    public function log(LogEntry $entry): void {
+        // TODO: Implement log() method.
     }
 }

@@ -29,6 +29,7 @@ function error_log_register_handlers(): void {
     include_once __DIR__ . '/src/ErrorHandler.php';
     include_once __DIR__ . '/src/Logger/LoggerInterface.php';
     include_once __DIR__ . '/src/Logger/WPDBLogger.php';
+    include_once __DIR__ . '/src/LogEntry.php';
 
     $error_handler = new ErrorHandler(new WPDBLogger($wpdb));
     $curr_error_handler = set_error_handler([$error_handler, 'handleError']);
