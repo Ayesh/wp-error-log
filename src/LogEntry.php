@@ -31,16 +31,4 @@ class LogEntry {
         \E_DEPRECATED => 'Deprecated function',
         \E_USER_DEPRECATED => 'User deprecated function'
     ];
-
-    public function unpack(): void {
-        if (is_string($this->error_vars)) {
-            $this->error_vars = json_decode($this->error_vars, true);
-        }
-    }
-
-    public function pack(): void {
-        if (\is_string($this->error_vars)) {
-            $this->error_vars = json_encode($this->error_vars);
-        }
-    }
 }
