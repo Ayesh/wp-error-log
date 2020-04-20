@@ -77,10 +77,6 @@ final class ErrorHandler {
         $this->prevErroHandler = $curr_error_handler;
     }
 
-    public function __destruct() {
-        $this->logger->commit();
-    }
-
     public function setPreviousExceptionHandler(?callable $curr_error_handler): void {
         $this->prevExceptionHandler = $curr_error_handler;
     }
@@ -111,5 +107,9 @@ final class ErrorHandler {
         $entry->url = $context['REQUEST_SCHEME'] . '//' . $context['HTTP_HOST'] . '/' . $context['REQUEST_URI '];
 
         return $entry;
+    }
+
+    public function __destruct() {
+        $this->logger->commit();
     }
 }
